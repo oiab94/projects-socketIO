@@ -18,6 +18,7 @@ module.exports = {
 		"react"
 	],
 	"rules": {
+		"react/prop-types":"off",
 		"react/react-in-jsx-scope": "off",
 		"react/react-uses-react": "off",
 		"react/jsx-filename-extension": [
