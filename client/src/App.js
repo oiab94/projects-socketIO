@@ -1,3 +1,4 @@
+import "bootstrap/dist/css/bootstrap.min.css";
 import { useState } from "react";
 import socket from "./socket";
 
@@ -18,13 +19,9 @@ function App() {
 	return (
 		<>
 			<h1>Hello World</h1>
-			<button onClick={ connectSocket }>Connect</button>
-			<button onClick={ disconnectSocket }>Disconnect</button>
-			{
-				isConnected ? 
-					<h2>Socket is ON</h2> :
-					<h2>Socket is OFF</h2>
-			}
+			<button onClick={connectSocket}>Connect</button>
+			<button onClick={disconnectSocket}>Disconnect</button>
+			{isConnected ? <h2>Socket is ON</h2> : <h2>Socket is OFF</h2>}
 		</>
 	);
 }
