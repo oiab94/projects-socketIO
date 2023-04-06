@@ -26,14 +26,14 @@ const io = new WebSocketServer(
 server.listen(
 	process.env.PORT,
 	() => {
-		console.log(`Express-> Se escucha en el puerto ${process.env.PORT}`);
+		console.log(`EXPRESS: Se escucha en el puerto ${process.env.PORT}`);
 	}
 );
 
 io.on(
 	"connection",
-	() => {
-		console.log("Socket: Estableciendo nueva conexion");
+	(socket) => {
+		console.log(`SOCKET: Nueva conexion establecida con ${socket.id}`);
 	}
 );
 
