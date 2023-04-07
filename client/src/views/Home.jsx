@@ -3,6 +3,7 @@ import "../static/css/style.css";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import { InputComponent } from "../components/InputComponent";
 import { useState } from "react";
+import socket from "../socket";
 
 const Home = () => {
 	const [onTitle, setOnTitle] = useState("");
@@ -13,6 +14,16 @@ const Home = () => {
 		console.log(onTitle, onDescription);
 		setOnTitle("");
 		setOnDescription("");
+
+		// Enviamos el mensaje al servidor
+		socket.connect();
+		socket.emit(
+			"client:newnote", 
+			{
+				title: onTitle,
+				description: onDescription,
+			}
+		);
 	};
 
 	return (
