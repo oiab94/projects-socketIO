@@ -4,7 +4,6 @@ import express from "express";
 import { createServer } from "http";
 import { Server } from "socket.io";
 import testRoute from "./routes/test.route";
-import { connection } from "./controllers/io.controller";
 
 // * VARIABLES
 const app = express();
@@ -30,4 +29,3 @@ httpServer.listen(
 app.use(testRoute);
 
 // * SOCKET
-connection(io);
