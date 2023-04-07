@@ -1,0 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap');
+
+.App {
+	display: flex;
+	min-height: 100vh;
+	background-image: url("../img/rm218-bb-07.jpg");
+	background-size: cover;
+	background-position: center;
+	font-family: 'Josefin Sans', sans-serif;
+	color: #dadada;
+}
