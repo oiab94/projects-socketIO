@@ -29,7 +29,7 @@ const Home = () => {
 								setIsSelected(!isSelected);
 								navigate("/login");
 							}}
-							variant="outline-dark"
+							variant="outline-light"
 							className="rounded-pill me-3" >
 							Login
 						</Col>
@@ -41,7 +41,7 @@ const Home = () => {
 								setIsSelected(!isSelected);
 								navigate("/signup");
 							}}
-							variant="outline-dark"
+							variant="outline-light"
 							className="rounded-pill" >
 							Sign up
 						</Col>

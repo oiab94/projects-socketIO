@@ -12,3 +12,8 @@
 .fs {
 	font-size: 5rem;
 }
+
+.btn-style {
+	background-color: #69a4fc;
+	border-color: #69a4fc;
+}
