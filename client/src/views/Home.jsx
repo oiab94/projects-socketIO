@@ -1,8 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ThemeProvider, Container, Row, Col, Button } from "react-bootstrap";
+import { useNavigate, Outlet } from "react-router-dom";
 
 const Home = () => {
 	const [isSelected, setIsSelected] = useState(true);
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		navigate("/login");
+	},[]);
 
 	return (
 		<ThemeProvider breakpoints={["xl", "lg", "md"]} minBreakpoint="md">
@@ -19,7 +25,10 @@ const Home = () => {
 							md={ 5 }
 							as={ Button }
 							active={ isSelected }
-							onClick={ () => setIsSelected(!isSelected) }
+							onClick={() => {
+								setIsSelected(!isSelected);
+								navigate("/login");
+							}}
 							variant="outline-dark"
 							className="rounded-pill me-3" >
 							Login
@@ -28,11 +37,17 @@ const Home = () => {
 							md={ 5 }
 							as={ Button }
 							active={ !isSelected }
-							onClick={ () => setIsSelected(!isSelected) }
+							onClick={() => {
+								setIsSelected(!isSelected);
+								navigate("/signup");
+							}}
 							variant="outline-dark"
 							className="rounded-pill" >
 							Sign up
 						</Col>
+					</Row>
+					<Row>
+						<Outlet />
 					</Row>
 				</Row>
 			</Container>
