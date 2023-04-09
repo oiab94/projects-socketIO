@@ -1,5 +1,5 @@
 import { Button, Form, InputGroup } from "react-bootstrap";
-import FieldGroup from "./form/InputGroup";
+import FieldGroup from "./form/FieldGroup";
 import { useState } from "react";
 
 const Signup = () => {
