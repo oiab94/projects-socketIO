@@ -1,14 +1,19 @@
 const express = require("express");
 require("dotenv").config();
 const { chats } = require("./data/data");
+const connectDB = require("./configs/mongoose.config");
+require("colors");
 
 // * Variables
 const app = express();
 
 // * Servidor
 app.listen(process.env.PORT,() => {
-	console.log(`EXPRESS: Se escucha en puerto ${process.env.PORT}`);
+	console.log(`EXPRESS: Se escucha en puerto ${process.env.PORT}`.yellow.bold);
 });
+
+// * Base de datos
+connectDB();
 
 // Tets de api
 app.get("/", (req, res) => {
