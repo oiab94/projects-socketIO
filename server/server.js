@@ -1,8 +1,8 @@
 const express = require("express");
 require("dotenv").config();
-const { chats } = require("./data/data");
 const connectDB = require("./configs/mongoose.config");
 require("colors");
+const userRoutes = require("./routes/user.routes");
 
 // * Variables
 const app = express();
@@ -15,10 +15,13 @@ app.listen(process.env.PORT,() => {
 // * Base de datos
 connectDB();
 
+// * Middleware
+app.use(express.json());
+
 // Tets de api
 app.get("/", (req, res) => {
-	res.status(200).send("API esta corriendo");
+	res.status(200).send("API is running");
 });
-app.get("/api/chat", (req, res) => {
-	res.status(200).send(chats);
-});
+
+// * Rutas de API
+app.use("/api/user", userRoutes); 
