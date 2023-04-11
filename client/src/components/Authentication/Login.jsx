@@ -1,15 +1,41 @@
 import { useState } from "react";
 import { Form, Button, InputGroup } from "react-bootstrap";
 import FieldGroup from "./form/FieldGroup";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Login = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [showPassword, setShowPassword] = useState(false);
+	const navigate = useNavigate();
 
+	const handleSubmit = async (e) => {
+		e.preventDefault();
 
-	const handleSubmit = () => {
-		console.log(email, password);
+		if (!email || !password) {
+			console.log("Indica que inserte sus datos");
+			return;
+		}
+		
+		try {
+			const config = {
+				headers : {
+					"Content-type": "application/json",
+				}
+			};
+
+			const { data } = await axios.post(
+				"api/user/login",
+				{ email, password },
+				config
+			);
+
+			localStorage.setItem("userInfo", JSON.stringify(data));
+			navigate("/chats");
+		} catch (error) {
+			console.log(error);
+		}
 	};
 
 	return (
@@ -40,7 +66,7 @@ const Login = () => {
 				</Form.Group>
 
 				<div className="mb-3">
-					<Button variant="outline-light" className="w-100">
+					<Button variant="outline-light" className="w-100" type="submit">
 						Login
 					</Button>
 				</div>
