@@ -19,10 +19,10 @@ const chat_access = asyncHandlers(async (req, res) => {
 		]
 	})
 		.populate("users", "-password")
-		.populate("latestMessage");
+		.populate("latesMessage");
 
 	isChat = await User.populate(isChat, {
-		path:"latestMessage.sender",
+		path:"latesMessage.sender",
 		select:"name picture email",
 	});
 
@@ -49,6 +49,27 @@ const chat_access = asyncHandlers(async (req, res) => {
 	}
 });
 
+const chat_get = asyncHandlers(async (req, res) => {
+	try{
+		Chat.find({ users: { $elemMatch: { $eq: req.user._id } } })
+			.populate("users", "-password")
+			.populate("groupAdmin", "-password")
+			.populate("latesMessage")
+			.sort({ updatedAt: -1 })
+			.then(async (results) => {
+				results = await User.populate(results, {
+					path:"latesMessage.sender",
+					select:"name picture email",
+				});
+
+				res.status(200).send(results);
+			});
+	} catch (error){
+		throw new Error(error);
+	}
+});
+
 module.exports = {
 	chat_access,
+	chat_get
 };
