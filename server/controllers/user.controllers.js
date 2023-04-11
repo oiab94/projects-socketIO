@@ -64,4 +64,19 @@ const authUser = asyncHandler(
 	}
 );
 
-module.exports = { registerUser, authUser };
+// * /api/user/getUsers?search=<algunNombre>
+const allUsers = asyncHandler(async (req, res) => {
+	const keyword = req.query.search ? {
+		$or: [
+			{ name: { $regex: req.query.search, $options: "i" } },
+			{ email: { $regex: req.query.search, $options: "i" } },
+		]
+	} : {};
+
+	// * Busca todos los usuarios que contenga la palabra indicada
+	const users = await User.find(keyword);
+
+	res.send(users);
+});
+
+module.exports = { registerUser, authUser, allUsers };
