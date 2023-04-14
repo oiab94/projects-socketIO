@@ -26,9 +26,10 @@ const chat_access = asyncHandlers(async (req, res) => {
 		select:"name picture email",
 	});
 
+	// Si existe un chat entre ambas personas retornamos el primer chat
 	if(isChat.length > 0){
 		res.send(isChat[0]);
-	} else {
+	} else { // Si no existe ningun chat entre las dos creamos un chat nuevo
 		let chatData = {
 			chatName: "sender",
 			isGroupChat: false,

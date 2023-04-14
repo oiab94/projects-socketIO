@@ -67,6 +67,7 @@ const authUser = asyncHandler(
 // * /api/user/getUsers?search=<algunNombre>
 const allUsers = asyncHandler(async (req, res) => {
 	const keyword = req.query.search ? {
+		// Podemos buscar a una persona por su nombre o email
 		$or: [
 			{ name: { $regex: req.query.search, $options: "i" } },
 			{ email: { $regex: req.query.search, $options: "i" } },
