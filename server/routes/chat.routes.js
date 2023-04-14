@@ -1,13 +1,13 @@
 const { Router } = require("express");
 const { protect } = require("../middleware/auth.middleware");
-const { chat_access, chat_get } = require("../controllers/chat.controllers");
+const { chat_access, chat_get, group_create } = require("../controllers/chat.controllers");
 
 // * Variables
 const router = Router();
 
 // * Direccionamiento
 router.post("/", protect, chat_access);
-// router.post("/group", protect, group_create);
+router.post("/groupCreate", protect, group_create);
 router.get("/", protect, chat_get);
 // router.put("/groupRename", protect, group_rename);
 // router.put("/groupRemove", private, group_removeFrom);
