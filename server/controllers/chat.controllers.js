@@ -127,9 +127,49 @@ const group_rename = asyncHandlers(async (req, res) => {
 	}
 });
 
+const group_addTo = asyncHandlers(async (req, res) => {
+	const { chatId, userId } = req.body;
+
+	const added = await Chat.findByIdAndUpdate(
+		chatId,
+		{ $push: { users: userId } },
+		{ new: true }
+	)
+		.populate("users", "-password")
+		.populate("groupAdmin", "-password");
+
+	if (!added) {
+		res.status(400);
+		throw new Error("Chat Not Found");
+	} else {
+		res.json(added);
+	}
+});
+
+const group_removeTo = asyncHandlers( async(req, res) => {
+	const { chatId, userId } = req.body;
+
+	const remove = await Chat.findByIdAndUpdate(
+		chatId,
+		{ $pull: { users: userId } },
+		{ new: true }
+	)
+		.populate("users", "-password")
+		.populate("groupAdmin", "-password");
+
+	if (!remove) {
+		res.status(400);
+		throw new Error("Chat Not Found");
+	} else {
+		res.json(remove);
+	}
+});
+
 module.exports = {
 	chat_access,
 	chat_get,
 	group_create,
-	group_rename
+	group_rename,
+	group_addTo,
+	group_removeTo
 };
