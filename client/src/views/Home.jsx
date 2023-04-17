@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { ThemeProvider, Container, Row, Col, Button } from "react-bootstrap";
 import { useNavigate, Outlet } from "react-router-dom";
 
@@ -7,8 +7,14 @@ const Home = () => {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		navigate("/login");
-	},[]);
+		const user = JSON.parse(localStorage.getItem("userInfo"));
+
+		console.log(user);
+
+		!user ? 
+			navigate("/login") :
+			navigate("/chats");
+	},[navigate]);
 
 	return (
 		<ThemeProvider breakpoints={["xl", "lg", "md"]} minBreakpoint="md">
