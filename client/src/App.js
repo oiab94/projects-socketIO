@@ -5,12 +5,16 @@ import Home from "./views/Home";
 import Chat from "./views/Chat";
 import Login from "./components/Authentication/Login";
 import Signup from "./components/Authentication/Signup";
+import { ChatProvider } from "./context/ChatProvider";
 
 function App() {
 	const router = createBrowserRouter([
 		{
 			path: "/",
-			element: <Home />,
+			element: 
+				<ChatProvider>
+					<Home />,
+				</ChatProvider>,
 			children:[
 				{
 					path:"login",
@@ -24,7 +28,10 @@ function App() {
 		},
 		{
 			path:"/chats",
-			element: <Chat />,
+			element: 
+				<ChatProvider>
+					<Chat />,
+				</ChatProvider>,
 		}
 	]);
 
