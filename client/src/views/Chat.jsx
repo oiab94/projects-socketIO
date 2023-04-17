@@ -1,31 +1,24 @@
-import { useEffect } from "react";
-import axios from "axios";
-import { useState } from "react";
+import { ChatState } from "../context/ChatProvider";
+import { Container, Row, Col } from "react-bootstrap";
+import SideBar from "../components/Miscellaneous/SideBar";
+import MyChats from "../components/Miscellaneous/MyChats";
+import ChatBox from "../components/Miscellaneous/ChatBox";
 
 const Chat = () => {
-	const [chats, setChats] = useState([]);
-
-	// Obtenemos los chats
-	const fetchChats = async () => {
-		const { data } = await axios.get("/api/chat");
-		
-		console.log(data);
-		setChats(data);
-	};
-
-	// Efectos
-	useEffect(() => {
-		fetchChats();
-	}, []);
+	const { user } = ChatState();
 
 	return (
 		<>
-			<h1>chats</h1>
-			{
-				chats.map(chat => {
-					return <p key={ chat._id }>{ chat.chatName }</p>;
-				})
-			}
+			<Container>
+				<Row>
+					<Col>{ user && <SideBar /> }</Col>
+				</Row>
+				
+				<Row>
+					<Col>{user && <MyChats />}</Col>
+					<Col>{ user && <ChatBox /> }</Col>
+				</Row>
+			</Container>
 		</>
 	);
 };
