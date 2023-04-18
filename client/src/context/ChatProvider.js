@@ -10,12 +10,12 @@ const ChatProvider = ({ children }) => {
 	useEffect(() => {
 		const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 		setUser(userInfo);
-		console.log(!userInfo);
 
+		console.log("CHAT_PROVIDER", userInfo);
 		// Si el usuario no está logeado redireccionamos
 		if(!userInfo)
 			navigate("/login");
-	},[navigate]);
+	},[]);
 
 	return (
 		<>
