@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { ThemeProvider, Container, Row, Col, Button } from "react-bootstrap";
 import { useNavigate, Outlet } from "react-router-dom";
 
@@ -6,15 +6,7 @@ const Home = () => {
 	const [isSelected, setIsSelected] = useState(true);
 	const navigate = useNavigate();
 
-	useEffect(() => {
-		const user = JSON.parse(localStorage.getItem("userInfo"));
-
-		console.log(user);
-
-		!user ? 
-			navigate("/login") :
-			navigate("/chats");
-	},[navigate]);
+	// TODO: Si el usuario esta logeado enviarlo a chats
 
 	return (
 		<ThemeProvider breakpoints={["xl", "lg", "md"]} minBreakpoint="md">
