@@ -1,4 +1,4 @@
-import { Button, Form, InputGroup, Spinner } from "react-bootstrap";
+import { Button, Form, InputGroup, Spinner, Toast } from "react-bootstrap";
 import FieldGroup from "./form/FieldGroup";
 import { useState } from "react";
 import axios from "axios";
@@ -12,17 +12,25 @@ const Signup = () => {
 	const [confirmPassword, setConfirmPassword] = useState("");
 	const [showPassword, setShowPassword] = useState(false);
 	const [loading, setLoading] = useState(false);
+	const [textError, setTextError] = useState("");
+	const [isFormValid, setIsFormValid] = useState(false);
 	const navigate = useNavigate();
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+		
+		if(!name || !email || !password || !confirmPassword){
+			setIsFormValid(true);
+			setTextError("All the fields are required");
+			return;
+		}
+		if(password !== confirmPassword){
+			setIsFormValid(true);
+			setTextError("Passwords are not equal");
+			return;
+		}
+		
 		setLoading(true);
-
-		if(!name || !email || !password || !confirmPassword)
-			console.log("Ingrese todos los campos");
-		if(password !== confirmPassword)
-			console.log("Password incorrectos");
-
 		try {
 			const config = {
 				header: {
@@ -38,19 +46,22 @@ const Signup = () => {
 			setLoading(false);
 			navigate("/chats");
 		} catch (error) {
-			console.log(error);
+			setIsFormValid(true);
+			setTextError("Insert a picture");
+			setLoading(false);
+			console.log("Form Error: ", error);
 		}
 	};
 
 	const loadPicture = (picture) => {
-		setLoading(true);
-		
 		if(picture === undefined){
-			console.log("Lanzar error Imagen invalida");
+			setIsFormValid(true);
+			setTextError("Please insert a picture");
 			return;
 		}
- 
+		
 		if(picture.type === "image/jpeg" || picture.type === "image/png"){
+			setLoading(true);
 			const data = new FormData();
 			
 			data.append("file", picture);
@@ -68,11 +79,12 @@ const Signup = () => {
 					setLoading(false);
 				})
 				.catch(err => {
-					console.log(err);
+					console.log("LoadPicture: ", err);
 					setLoading(false);
 				});
 		} else {
-			console.log("Imagenes invalidas");
+			setIsFormValid(true);
+			setTextError("Picture are not valid");
 		}
 	};
 		
@@ -155,6 +167,24 @@ const Signup = () => {
 					</Button>
 				</div>
 			</Form>
+
+			<div className="d-flex position-fixed bottom-0 mb-3 justify-content-center" style={{color: "black"}}>
+				<Toast 
+					show={isFormValid}
+					onClose={() => setIsFormValid(!isFormValid)}
+					delay={4000}
+					bg="danger"
+					autohide
+					className="p-0"
+				>
+					<Toast.Header>
+						<span className="me-auto">Form error</span>
+					</Toast.Header>
+					<Toast.Body>
+						{ textError }
+					</Toast.Body>
+				</Toast>
+			</div>
 		</>
 	);
 };
