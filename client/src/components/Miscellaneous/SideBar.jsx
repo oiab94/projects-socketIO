@@ -3,6 +3,7 @@ import { Button, Container, OverlayTrigger, Tooltip, Dropdown, Image } from "rea
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { ChatState } from "../../context/ChatProvider";
+import { ProfileModal } from "./ProfileModal";
 
 const SideBar = () => {
 	// const [search, setSearch] = useState("");
@@ -42,11 +43,13 @@ const SideBar = () => {
 
 				<Dropdown>
 					<Dropdown.Toggle as={Button} variant="outline-light">
-						<Image src={user.picture} roundedCircle width="15px" />
+						<Image src={user.picture} roundedCircle width="25px" height="25px" />
 					</Dropdown.Toggle>
 
 					<Dropdown.Menu>
-						<Dropdown.Item>My Profile</Dropdown.Item>
+						<ProfileModal user={ user }>
+							<Dropdown.Item>My Profile</Dropdown.Item>
+						</ProfileModal>
 						<Dropdown.Divider />
 						<Dropdown.Item>Logout</Dropdown.Item>
 					</Dropdown.Menu>
