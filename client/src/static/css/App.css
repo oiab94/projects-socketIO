@@ -16,3 +16,11 @@
 .btn-style:hover {
 	background-color: #ff8080;
 }
+
+.hide-arrow::after {
+	display: none;
+}
+
+.btn-notification{
+	background-color: transparent;
+}
