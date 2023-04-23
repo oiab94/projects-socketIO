@@ -1,0 +1,31 @@
+[{
+	"name": "Kenny",
+	"email": "kwoodier0@dailymotion.com",
+	"password": "a10tBV",
+	"picture": "https://res.cloudinary.com/projects-mern/image/upload/v1682264212/chat-app/txjgoqmplrlhnmirmomm.png"
+},
+{
+    "name": "Kathlin",
+    "email": "kpeirpoint1@nytimes.com",
+    "password": "YwqcvhAR",
+    "picture": "https://res.cloudinary.com/projects-mern/image/upload/v1682264211/chat-app/cwkyvkpklu7ialdnhux7.png"
+},
+{
+	"name": "Rolf",
+	"email": "rchallenor2@bbc.co.uk",
+	"password": "Ns0Po43e",
+	"picture": "https://res.cloudinary.com/projects-mern/image/upload/v1682264212/chat-app/wx9rgvhp2hhygz9ttmv8.png"
+},
+{
+	"name": "Fanya",
+	"email": "fcollacombe4@cafepress.com",
+	"password": "YwSKxO",
+	"picture": "https://res.cloudinary.com/projects-mern/image/upload/v1682264211/chat-app/cwkyvkpklu7ialdnhux7.png"
+},
+{
+	"name": "Francesco",
+	"email": "fmoscon6@cloudflare.com",
+	"password": "aREsjBwN",
+	"picture": "https://res.cloudinary.com/projects-mern/image/upload/v1682264196/chat-app/deflhuzez7glinrzn3qj.png"
+}
+]
