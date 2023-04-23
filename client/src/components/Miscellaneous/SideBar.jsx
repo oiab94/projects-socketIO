@@ -75,14 +75,14 @@ const SideBar = () => {
 
 			<div className="fs-1">Chat app</div>
 
-			<div className="d-flex">
+			<div className="d-flex align-items-center">
 				<Dropdown>
 					<Dropdown.Toggle
-						className="hide-arrow border-0 round"
+						className="hide-arrow border-0 round p-0 d-flex me-2"
 						as={Button}
 						variant="outline-light"
 					>
-						<FontAwesomeIcon icon={faBell} style={{height: "1.5em"}} />
+						<FontAwesomeIcon icon={faBell} style={{height: "2em"}} />
 					</Dropdown.Toggle>
 
 					<Dropdown.Menu>
@@ -91,11 +91,14 @@ const SideBar = () => {
 				</Dropdown>
 
 				<Dropdown>
-					<Dropdown.Toggle as={Button} variant="outline-light">
+					<Dropdown.Toggle 
+						as={Button} 
+						variant="outline-light"
+						className="p-0 me-2 border-0">
 						<Image
 							src={user.picture}
 							roundedCircle
-							style={{width: "20px", height: "20px"}}
+							style={{width: "3.6em", height: "3.6em"}}
 						/>
 					</Dropdown.Toggle>
 
