@@ -7,8 +7,9 @@ const UserListItem = ({ user, handleFunction }) => {
 			<Container
 				className="border border-2 d-flex w-100 p-0 search-stack"
 				as={Button}
+				onClick={handleFunction}
 			>
-				<Col onClick={handleFunction} xs={3} className="w-auto">
+				<Col xs={3} className="w-auto">
 					<Image src={user.picture} width="50px" height="50px" roundedCircle />
 				</Col>
 				<Col xs={9}>
