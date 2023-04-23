@@ -14,7 +14,7 @@ const ChatProvider = ({ children }) => {
 		// Si el usuario no está logeado redireccionamos
 		if(!userInfo)
 			navigate("/login");
-	},[navigate]);
+	},[]);
 
 	return (
 		<>
