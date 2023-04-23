@@ -24,3 +24,16 @@
 .btn-notification{
 	background-color: transparent;
 }
+
+.search-stack{
+	height: 70px;
+	background: var(--bs-gray-300);
+	color: #00000b;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.search-stack:hover{
+	background: var(--bs-gray-500);
+}
