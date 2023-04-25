@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ThemeProvider, Container, Row, Col, Button } from "react-bootstrap";
 import { useNavigate, Outlet } from "react-router-dom";
 
@@ -7,6 +7,11 @@ const Home = () => {
 	const navigate = useNavigate();
 
 	// TODO: Si el usuario esta logeado enviarlo a chats
+
+	// Al ingresar la primera vez nos reenvia a login
+	useEffect(() => {
+		navigate("/login");
+	},[]);
 
 	return (
 		<ThemeProvider breakpoints={["xl", "lg", "md"]} minBreakpoint="md">
