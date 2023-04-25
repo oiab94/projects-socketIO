@@ -1,5 +1,5 @@
 // import { useState } from "react";
-import { Button, Container, OverlayTrigger, Tooltip, Dropdown, Image, Offcanvas, Form, Col, Row } from "react-bootstrap";
+import { Button, Container, OverlayTrigger, Tooltip, Dropdown, Image, Offcanvas, Form, Col, Row, Spinner } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { ChatState } from "../../context/ChatProvider";
@@ -15,10 +15,10 @@ const SideBar = () => {
 	const [search, setSearch] = useState("");
 	const [searchResult, setSearchResult] = useState([]);
 	const [loading, setLoading] = useState(false);
-	// const [loadingChat, setLoadingChat] = useState();
+	const [loadingChat, setLoadingChat] = useState();
 	const [show, setShow] = useState(false);
 	const [showToast, setShowToast] = useState(false);
-	const { user } = ChatState();
+	const { user, setSelectedChat, chats, setChats } = ChatState();
 	const navigate = useNavigate();
 	const handleShow = () => setShow(true);
 	const handleClose = () => setShow(false);
@@ -43,7 +43,6 @@ const SideBar = () => {
 			};
 			const { data } = await axios.get(`/api/user/getUsers?search=${search}`, config); 
 
-			console.log("SEARCH: ", data);
 			setLoading(false);
 			setSearchResult(data);
 		} catch ({ response }) {
@@ -53,8 +52,28 @@ const SideBar = () => {
 		}
 	};
 
-	const accessChat = (userId) => {
-		console.log("Acces Chat: ", userId);
+	const accessChat = async (userId) => {
+		try {
+			setLoadingChat(true);
+			const config = {
+				headers: {
+					"Content-type": "application/json",
+					Authorization: `Bearer ${user.token}`,
+				},
+			};
+
+			const { data } = await axios.post("/api/chat", { userId }, config);
+
+			// Actualizamos los datos del chat
+			if (!chats.find((c) => c._id === data._id)) 
+				setChats([data, ...chats]);
+
+			setSelectedChat(data);
+			setLoadingChat(false);
+			setShow(false);
+		} catch ({ response }) {
+			console.error("access chat: ", response);
+		}
 	};
 
 	return (
@@ -64,7 +83,7 @@ const SideBar = () => {
 				overlay={<Tooltip id="button-tooltip-2">Search Users to chat</Tooltip>}
 			>
 				<Button
-					variant="light"
+					variant="outline-light"
 					className="d-inline-flex align-items-center"
 					onClick={handleShow}
 				>
@@ -154,6 +173,9 @@ const SideBar = () => {
 											handleFunction={() => accessChat(user._id)}
 										/>
 									)
+							}
+							{
+								loadingChat && <Spinner animation="border" role="status" />
 							}
 						</div>
 					</div>
