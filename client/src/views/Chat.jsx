@@ -14,7 +14,7 @@ const Chat = () => {
 					<Col>{ user && <SideBar /> }</Col>
 				</Row>
 				
-				<Row>
+				<Row className="mt-3 mb-3 h-75">
 					<Col>{user && <MyChats />}</Col>
 					<Col>{ user && <ChatBox /> }</Col>
 				</Row>
