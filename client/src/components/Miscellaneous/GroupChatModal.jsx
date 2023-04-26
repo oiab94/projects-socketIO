@@ -7,12 +7,12 @@ import { UserBadgeItem } from "../UserAvatar/UserBadgeItem";
 
 const GroupChatModal = ({ children }) => {
 	const [search, setSearch] = useState("");
-	// const [groupChatName, setGroupChatName] = useState("");
+	const [groupChatName, setGroupChatName] = useState("");
 	const [searchResult, setSearchResult] = useState([]);
 	const [selectedUsers, setSelectedUsers] = useState([]);
 	const [loading, setLoading] = useState(false);
-	// const { user, chats, setChats } = ChatState();
-	const { user } = ChatState();
+	const { user, chats, setChats } = ChatState();
+
 	// Modal
 	const [showModal, setShowModal] = useState(false);
 	const handleClose = () => setShowModal(false);
@@ -44,8 +44,32 @@ const GroupChatModal = ({ children }) => {
 		}
 	};
 
-	const handleSubmit = () => {
-		handleClose(false);
+	const handleSubmit = async () => {
+		if(!groupChatName || !selectedUsers){
+			// TODO: Lanza un toast
+			console.log("GroupChat: no se agrego nada");
+		}
+
+		try {
+			const config = {
+				headers: {
+					Authorization: `Bearer ${user.token}`,
+				},
+			};
+
+			const { data } = await axios.post("/api/chat/groupCreate", {
+				name: groupChatName,
+				users: JSON.stringify(selectedUsers.map((u) => u._id))
+			}, config);
+
+			setChats([data, ...chats]);
+			handleClose(false);
+			//TODO: Crea un toast que diga que se creo el chat group
+		} catch ({ response }) {
+			// TODO: Lanza toast
+			console.log("GroupChat: ", response);
+		}
+
 	};
 
 	const handleGroup = (userToAdd) => {
@@ -80,6 +104,7 @@ const GroupChatModal = ({ children }) => {
 						className="mb-3"
 						type="text"
 						placeholder="Chat Name"
+						onChange={({ target }) => setGroupChatName(target.value)}
 					/>
 					<Form.Control 
 						type="text"
