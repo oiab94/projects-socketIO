@@ -35,7 +35,7 @@ const MyChats = () => {
 	},[]);
 
 	return (
-		<Container className="border h-100" fluid>
+		<Container className="border rounded h-100" fluid>
 			<Row>
 				<Col className="d-flex justify-content-between align-items-center">
 					<span className="fs-1">My Chats</span>
