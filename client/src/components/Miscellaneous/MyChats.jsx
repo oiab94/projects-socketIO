@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { ChatLoading } from "./ChatLoading";
 import { getSender } from "../Config/ChatLogics";
+import { GroupChatModal } from "./GroupChatModal";
 
 const MyChats = () => {
 	const [loggedUser, setLoggedUser] = useState();
@@ -38,10 +39,12 @@ const MyChats = () => {
 			<Row>
 				<Col className="d-flex justify-content-between align-items-center">
 					<span className="fs-1">My Chats</span>
-					<Button variant="outline-light">
-						<strong>New Group Chat</strong>
-						<FontAwesomeIcon icon={faPlus} className="ps-3" />
-					</Button>
+					<GroupChatModal>
+						<Button variant="outline-light">
+							<strong>New Group Chat</strong>
+							<FontAwesomeIcon icon={faPlus} className="ps-3" />
+						</Button>
+					</GroupChatModal>
 				</Col>
 			</Row>
 
