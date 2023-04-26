@@ -23,6 +23,7 @@ const ProfileModal = ({ children, user }) => {
 				)
 			}
 			<Modal 
+				centered
 				show={show} 
 				onHide={handleClose}>
 				<Modal.Header className="justify-content-center">
