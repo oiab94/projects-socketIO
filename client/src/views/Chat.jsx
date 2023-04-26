@@ -15,7 +15,8 @@ const Chat = () => {
 				</Row>
 				
 				<Row className="mt-3 mb-3 h-75">
-					<Col>{user && <MyChats />}</Col>
+					<Col 
+						xs={ 5 } >{ user && <MyChats /> }</Col>
 					<Col>{ user && <ChatBox /> }</Col>
 				</Row>
 			</Container>
