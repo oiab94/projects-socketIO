@@ -17,7 +17,7 @@ const ProfileModal = ({ children, user }) => {
 				children ? (
 					<span onClick={ handleShow }>{ children }</span>
 				) : (
-					<Button variant="outline-light">
+					<Button variant="outline-secondary" onClick={() => setShow(true)}>
 						<FontAwesomeIcon icon={faEye} />
 					</Button>
 				)
