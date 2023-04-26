@@ -8,7 +8,7 @@ import { ChatLoading } from "./ChatLoading";
 import { getSender } from "../Config/ChatLogics";
 import { GroupChatModal } from "./GroupChatModal";
 
-const MyChats = () => {
+const MyChats = ({ fetchAgain }) => {
 	const [loggedUser, setLoggedUser] = useState();
 	const { user, chats, setChats, setSelectedChat } = ChatState();
 
@@ -32,7 +32,7 @@ const MyChats = () => {
 		fetchChats();
 		console.log("MyChats:", loggedUser);
 		console.log(chats);
-	},[]);
+	}, [fetchAgain]);
 
 	return (
 		<Container className="border rounded h-100" fluid>
@@ -49,25 +49,25 @@ const MyChats = () => {
 			</Row>
 
 			<Row className="mx-1">
-				{
-					chats 
-						? chats.map(( chat ) => {
-							return (
-								<Button 
-									key={ chat._id }
-									xs={ 12 }
-									className="d-flex mb-2"
-									variant="outline-light"
-									onClick={ () => setSelectedChat( chat ) } >
-									{
-										!chat.isGroupChat
-											? getSender(loggedUser, chat.users)
-											: chat.chatName
-									}
-								</Button>);
-						})
-						: <ChatLoading />
-				}
+				{chats ? (
+					chats.map((chat) => {
+						return (
+							<Button
+								key={chat._id}
+								xs={12}
+								className="d-flex mb-2"
+								variant="outline-light"
+								onClick={() => setSelectedChat(chat)}
+							>
+								{!chat.isGroupChat
+									? getSender(loggedUser, chat.users)
+									: chat.chatName}
+							</Button>
+						);
+					})
+				) : (
+					<ChatLoading />
+				)}
 			</Row>
 		</Container>
 	);
