@@ -1,6 +1,6 @@
 import React from "react";
 import { ChatState } from "../../context/ChatProvider";
-import { Button } from "react-bootstrap";
+import { Button, Col, Container, Row } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { getSender, getSenderFull } from "../Config/ChatLogics";
@@ -13,9 +13,12 @@ export const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 	return (
 		<>
 			{selectedChat ? (
-				<>
-					<div className="mt-3 w-100">
-						<div className="d-flex justify-content-between align-items-center">
+				<Container>
+					<Row className="pt-3 mh-100 w-100">
+						<Col
+							xs={12}
+							className="d-flex justify-content-between align-items-center"
+						>
 							<Button
 								variant="outline-secondary"
 								className="d-inline-flex align-items-center"
@@ -37,17 +40,27 @@ export const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 								</>
 							) : (
 								<>
-									<span className="fs-4">{selectedChat.chatName.toUpperCase()}</span>
+									<span className="fs-4">
+										{selectedChat.chatName.toUpperCase()}
+									</span>
 									{/* <UpdateGroupChatModal 
 												fetchAgain={ fetchAgain }
 												setFetchAgain={ setFetchAgain }
 											/> */}
 								</>
 							)}
+						</Col>
+					</Row>
+					<Row className="border border-2 mt-2 rounded-2" style={{ height: "720px" }}>
+						<Col
+							className="d-flex justify-content-between align-items-center"
+							style={{ backgroundColor: "var(--bs-border-color)" }}
+						>
+							asd
 							{/* Messages Here */}
-						</div>
-					</div>
-				</>
+						</Col>
+					</Row>
+				</Container>
 			) : (
 				<span className="fs-2 d-flex align-items-center">
 					Click on a user to start chatting
