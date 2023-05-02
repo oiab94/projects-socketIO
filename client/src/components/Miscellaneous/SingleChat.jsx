@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { getSender, getSenderFull } from "../Config/ChatLogics";
 import { ProfileModal } from "./ProfileModal";
+import { UpdateChatGroupModal } from "./UpdateGroupChatModal";
 
 /*eslint-disable no-unused-vars */
 export const SingleChat = ({ fetchAgain, setFetchAgain }) => {
@@ -43,10 +44,10 @@ export const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 									<span className="fs-4">
 										{selectedChat.chatName.toUpperCase()}
 									</span>
-									{/* <UpdateGroupChatModal 
-												fetchAgain={ fetchAgain }
-												setFetchAgain={ setFetchAgain }
-											/> */}
+									<UpdateChatGroupModal 
+										fetchAgain={ fetchAgain }
+										setFetchAgain={ setFetchAgain }
+									/>
 								</>
 							)}
 						</Col>
