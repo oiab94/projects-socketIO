@@ -77,7 +77,7 @@ const SideBar = () => {
 	};
 
 	return (
-		<Container className="d-flex justify-content-between align-items-center border border-1 mt-3 p-0">
+		<Container className="d-flex justify-content-between align-items-center mt-3 p-0">
 			<OverlayTrigger
 				placement="bottom"
 				overlay={<Tooltip id="button-tooltip-2">Search Users to chat</Tooltip>}
