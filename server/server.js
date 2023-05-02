@@ -4,6 +4,7 @@ const connectDB = require("./configs/mongoose.config");
 require("colors");
 const userRoutes = require("./routes/user.routes");
 const chatRoutes = require("./routes/chat.routes");
+const messageRoutes = require("./routes/message.routes");
 const { notFound, errorHandler } = require("./middleware/error.middleware");
 
 // * Variables
@@ -28,5 +29,6 @@ app.get("/", (req, res) => {
 // * Rutas de API
 app.use("/api/user", userRoutes); 
 app.use("/api/chat", chatRoutes);
+app.use("/api/message", messageRoutes);
 app.use(notFound);
 app.use(errorHandler);
