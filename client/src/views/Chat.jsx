@@ -17,9 +17,9 @@ const Chat = () => {
 					<Col>{user && <SideBar />}</Col>
 				</Row>
 
-				<Row className="mt-3 mb-3 h-75">
+				<Row className="mt-3 mb-3" style={{ height:"800px" }}>
 					<Col xs={5}>{user && <MyChats fetchAgain={fetchAgain} />}</Col>
-					<Col>{user && <ChatBox fetchAgain={ fetchAgain } setFetchAgain={ setFetchAgain } />}</Col>
+					<Col xs={7}>{user && <ChatBox fetchAgain={ fetchAgain } setFetchAgain={ setFetchAgain } />}</Col>
 				</Row>
 			</Container>
 		</>
