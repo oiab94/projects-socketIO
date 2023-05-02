@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ChatState } from "../../context/ChatProvider";
 import { Button, Col, Container, Row, Spinner, Form } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -15,6 +15,35 @@ export const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 	const [loading, setLoading] = useState(false);
 	const [newMessage, setNewMessage] = useState("");
 	
+	const fetchMessages = async () => {
+		if(!selectedChat) return;
+
+		try {
+			const config = {
+				headers: {
+					Authorization: `Bearer ${user.token}`,
+				},
+			};
+			setLoading(true);
+
+			const { data } = await axios.get(
+				`/api/message/getMessages/${selectedChat._id}`,
+				config
+			);
+			
+			setMessages(data);
+			setLoading(false);
+
+		} catch (error) {
+			console.log("Fetch Message: ", error);
+		}
+	};
+
+	useEffect(() => {
+		fetchMessages();
+	}, [selectedChat]);
+	
+
 	const sendMessage = async (event) => {
 		if(event.key === "Enter" && newMessage){
 			event.preventDefault();
@@ -29,7 +58,6 @@ export const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 					content: newMessage,
 					chatId: selectedChat._id
 				}, config);
-				console.log(data);
 				setNewMessage("");
 				setMessages([...messages,  data]);
 			} catch (error) {
