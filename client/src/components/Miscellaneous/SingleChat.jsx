@@ -64,7 +64,6 @@ export const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 		socket.on("stop typing", () => setIsTyping(false));
 	}, []);
 	
-	console.log("Notifications: ", notification);
 
 	useEffect(() => {
 		socket.on("message recieved", (newMessageReceived) => {
