@@ -8,13 +8,18 @@ import { ProfileModal } from "./ProfileModal";
 import { UpdateChatGroupModal } from "./UpdateGroupChatModal";
 import ScrollableChat from "./ScollableChat";
 import axios from "axios";
+import { io } from "socket.io-client";
 
 /*eslint-disable no-unused-vars */
+const ENDPOINT = process.env.REACT_APP_API_URL;
+let socket, selectedChatCompare;
+
 export const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 	const { user, selectedChat, setSelectedChat } = ChatState();
 	const [messages, setMessages] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const [newMessage, setNewMessage] = useState("");
+	const [socketConnected, setSocketConnected] = useState();
 	
 	const fetchMessages = async () => {
 		if(!selectedChat) return;
@@ -34,7 +39,7 @@ export const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 			
 			setMessages(data);
 			setLoading(false);
-
+			socket.emit("join chat", selectedChat._id);	// Cuando hacemos click en chat le indicamos a socket que nos vamos a conectar con ese grupo
 		} catch (error) {
 			console.log("Fetch Message: ", error);
 		}
@@ -42,7 +47,26 @@ export const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
 	useEffect(() => {
 		fetchMessages();
+
+		selectedChatCompare = selectedChat;
 	}, [selectedChat]);
+	
+	// Conecta nuestro socket client con el backend
+	useEffect(() => {
+		socket = io(ENDPOINT);
+		socket.emit("setup", user);
+		socket.on("connection", () => setSocketConnected(true));
+	}, []);
+	
+	useEffect(() => {
+		socket.on("message recieved", (newMessageReceived) => {
+			if(!selectedChatCompare || selectedChatCompare._id !== newMessageReceived.chat._id){
+				// Indica una notificacion
+			} else {
+				setMessages([...messages, newMessageReceived]);
+			}
+		});
+	});
 	
 
 	const sendMessage = async (event) => {
@@ -61,6 +85,7 @@ export const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 				}, config);
 				setNewMessage("");
 				setMessages([...messages,  data]);
+				socket.emit("new message", data);
 			} catch (error) {
 				console.log("Single chat: ", error);
 			}
