@@ -50,6 +50,15 @@ io.on("connection", (socket) => {
 			socket.in(user._id).emit("message recieved", newMessageRecieved);
 		});
 	});
+
+	socket.off("setup", (userData) => {
+		console.log("User disconnected");
+		socket.leave(userData._id);
+	});
+
+	// Indica si alguien esta escribiendo
+	socket.on("typing", (room) => socket.in(room).emit("typing"));
+	socket.on("stop typing", (room) => socket.in(room).emit("stop typing"));
 });
 
 // * Base de datos
