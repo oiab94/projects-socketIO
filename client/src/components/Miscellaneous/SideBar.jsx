@@ -10,6 +10,7 @@ import axios from "axios";
 import { ChatLoading } from "./ChatLoading";
 import LaunchToast from "./LaunchToast";
 import UserListItem from "../UserAvatar/UserListItem";
+import { getSender } from "../Config/ChatLogics";
 
 const SideBar = () => {
 	const [search, setSearch] = useState("");
@@ -18,7 +19,7 @@ const SideBar = () => {
 	const [loadingChat, setLoadingChat] = useState();
 	const [show, setShow] = useState(false);
 	const [showToast, setShowToast] = useState(false);
-	const { user, setSelectedChat, chats, setChats } = ChatState();
+	const { user, setSelectedChat, chats, setChats, notification, setNotification } = ChatState();
 	const navigate = useNavigate();
 	const handleShow = () => setShow(true);
 	const handleClose = () => setShow(false);
@@ -105,7 +106,25 @@ const SideBar = () => {
 					</Dropdown.Toggle>
 
 					<Dropdown.Menu>
-						<Dropdown.Item>Hello</Dropdown.Item>
+						<Dropdown.Item>
+							{
+								!notification.length && "No new messages"
+							}
+							{
+								notification.map(noti => (
+									<Dropdown.Item 
+										key={noti._id} 
+										onClick={() => {
+											setSelectedChat(noti.chat);
+											setNotification(notification.filter((n) => n !== noti));
+										}}>
+										{
+											noti.chat.isGroupChat ? `New message in ${noti.chat.chatName}`: `New message from ${getSender(user, noti.chat.users)}`
+										}
+									</Dropdown.Item>
+								))
+							}
+						</Dropdown.Item>
 					</Dropdown.Menu>
 				</Dropdown>
 

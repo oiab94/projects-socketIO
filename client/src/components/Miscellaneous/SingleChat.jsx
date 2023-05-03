@@ -17,7 +17,7 @@ const ENDPOINT = process.env.REACT_APP_API_URL;
 let socket, selectedChatCompare;
 
 export const SingleChat = ({ fetchAgain, setFetchAgain }) => {
-	const { user, selectedChat, setSelectedChat } = ChatState();
+	const { user, selectedChat, setSelectedChat, notification, setNotification } = ChatState();
 	const [messages, setMessages] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const [newMessage, setNewMessage] = useState("");
@@ -64,10 +64,16 @@ export const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 		socket.on("stop typing", () => setIsTyping(false));
 	}, []);
 	
+	console.log("Notifications: ", notification);
+
 	useEffect(() => {
 		socket.on("message recieved", (newMessageReceived) => {
 			if(!selectedChatCompare || selectedChatCompare._id !== newMessageReceived.chat._id){
 				// Indica una notificacion
+				if(!notification.includes(newMessageReceived)){
+					setNotification([newMessageReceived, ...notification]);
+					setFetchAgain(!fetchAgain);
+				}
 			} else {
 				setMessages([...messages, newMessageReceived]);
 			}
