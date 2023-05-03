@@ -6,6 +6,7 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { getSender, getSenderFull } from "../Config/ChatLogics";
 import { ProfileModal } from "./ProfileModal";
 import { UpdateChatGroupModal } from "./UpdateGroupChatModal";
+import ScrollableChat from "./ScollableChat";
 import axios from "axios";
 
 /*eslint-disable no-unused-vars */
@@ -109,6 +110,7 @@ export const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 									<UpdateChatGroupModal
 										fetchAgain={fetchAgain}
 										setFetchAgain={setFetchAgain}
+										fetchMessages={fetchMessages}
 									/>
 								</>
 							)}
@@ -122,13 +124,13 @@ export const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 						}}
 					>
 						<Col
-							className="d-flex justify-content-between align-items-center"
+							className="d-flex justify-content-start align-items-end"
 							style={{
 								backgroundColor: "var(--bs-border-color)",
 								height: "90%",
 							}}
 						>
-							{!loading ? (
+							{loading ? (
 								<Spinner
 									animation="border"
 									style={{
@@ -138,7 +140,9 @@ export const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 									}}
 								/>
 							) : (
-								<div>{/* messages */}</div>
+								<div style={{width:"100%"}}>
+									<ScrollableChat messages={messages} />
+								</div>
 							)}
 						</Col>
 
@@ -149,7 +153,7 @@ export const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 							<Form.Control
 								placeholder="Enter a message.."
 								type="text"
-								value={ newMessage}
+								value={newMessage}
 								onChange={typingHandler}
 							/>
 						</Form>

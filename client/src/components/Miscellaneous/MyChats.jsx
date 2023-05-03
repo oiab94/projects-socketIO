@@ -20,7 +20,6 @@ const MyChats = ({ fetchAgain }) => {
 				}
 			};
 			const { data } = await axios.get("/api/chat", config);
-			console.log("Response:", data);
 			setChats(data);
 		} catch ({ response }) {
 			console.log("My Chats: ", response);
@@ -30,8 +29,6 @@ const MyChats = ({ fetchAgain }) => {
 	useEffect(() => {
 		setLoggedUser(JSON.parse(localStorage.getItem("userInfo")));
 		fetchChats();
-		console.log("MyChats:", loggedUser);
-		console.log(chats);
 	}, [fetchAgain]);
 
 	return (

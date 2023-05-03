@@ -36,7 +36,6 @@ const GroupChatModal = ({ children }) => {
 				config
 			);
 
-			console.log("User Search: ", data);
 			setLoading(false);
 			setSearchResult(data);
 		} catch ({ response }) {

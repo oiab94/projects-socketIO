@@ -9,7 +9,7 @@ import axios from "axios";
 
 
 /*eslint-disable no-unused-vars */
-const UpdateChatGroupModal = ({ fetchAgain, setFetchAgain }) => {
+const UpdateChatGroupModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
 	const [groupChatName, setGroupChatName] = useState();
 	const [search, setSearch] = useState();
 	const [searchResult, setSearchResult] = useState();
@@ -51,7 +51,7 @@ const UpdateChatGroupModal = ({ fetchAgain, setFetchAgain }) => {
 				
 			setFetchAgain(!fetchAgain);
 			setLoading(false);
-			
+			fetchMessages();			
 		} catch ({ response }) {
 			console.log("GroupChatModal: ", response);
 		}
