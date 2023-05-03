@@ -11,8 +11,45 @@ const { notFound, errorHandler } = require("./middleware/error.middleware");
 const app = express();
 
 // * Servidor
-app.listen(process.env.PORT,() => {
+const server = app.listen(process.env.PORT,() => {
 	console.log(`EXPRESS: Se escucha en puerto ${process.env.PORT}`.yellow.bold);
+});
+
+// * Socket io
+const io = require("socket.io")(server, {
+	pingTimeout: 60000, // Va a realizar la conexion por 60 segundos si no se realiza nada
+	cors: {
+		origin: "http://localhost:3000",
+	}
+});
+
+io.on("connection", (socket) => {
+	console.log("Connected to socket.io");
+
+	socket.on("setup", (userData) => {
+		socket.join(userData._id);
+		console.log("Connected with: ", userData._id);
+		socket.emit("connected");
+	});
+
+	socket.on("join chat", (room) => {
+		socket.join(room);
+		console.log("User joined on room: ", room);
+	});
+
+	socket.on("new message", (newMessageRecieved) => {
+		var chat = newMessageRecieved.chat;
+
+		if(!chat.users)
+			return console.log("Chat.users not defined");
+		
+		// Si el chat es conmigo mismo no hacemos nada, si el chat es con otro user enviamos el mensaje 
+		chat.users.forEach(user => {
+			if(user._id == newMessageRecieved.sender._id) return;
+			
+			socket.in(user._id).emit("message recieved", newMessageRecieved);
+		});
+	});
 });
 
 // * Base de datos
