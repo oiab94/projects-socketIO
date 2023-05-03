@@ -2,11 +2,6 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Environment values
-
-	REACT_APP_API_URL="http://localhost:5000/"
-	REACT_APP_API_UPLOAD="https://api.cloudinary.com/v1_1/projects-mern/image/upload"
-
 ## Available Scripts
 
 In the project directory, you can run:
