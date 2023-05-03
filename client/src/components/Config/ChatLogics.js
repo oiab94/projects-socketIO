@@ -30,7 +30,6 @@ const isSameSenderMargin = (messages, m, index, userId) => {
 		messages[index + 1].sender._id === m.sender._id &&
 		messages[index].sender._id !== userId
 	){
-		console.log("SameSenderMargin: ", index);
 		return 40;
 	}
 	else if (
