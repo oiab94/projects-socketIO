@@ -36,6 +36,8 @@ const Login = () => {
 			navigate("/chats");
 		} catch (error) {
 			console.log(error);
+			setEmail("");
+			setPassword("");
 		}
 	};
 
@@ -43,6 +45,7 @@ const Login = () => {
 		<>
 			<Form onSubmit={handleSubmit}>
 				<FieldGroup
+					value={email}
 					id="email"
 					label="Email"
 					type="text"
@@ -54,6 +57,7 @@ const Login = () => {
 					<Form.Label>Password</Form.Label>
 					<InputGroup>
 						<Form.Control
+							value={password}
 							type={showPassword ? "text" : "password"}
 							onChange={({ target }) => setPassword(target.value)}
 						/>
@@ -73,7 +77,14 @@ const Login = () => {
 				</div>
 
 				<div className="mb-3">
-					<Button variant="outline-light" className="w-100 btn-style">
+					<Button 
+						onClick={() => {
+							setEmail("guest@guest.com");
+							setPassword("guest");
+						}}
+						variant="outline-light" 
+						className="w-100 btn-style" 
+					>
 						Get Guest User Credentials
 					</Button>
 				</div>
