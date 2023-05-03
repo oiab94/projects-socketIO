@@ -19,7 +19,7 @@ const server = app.listen(process.env.PORT,() => {
 const io = require("socket.io")(server, {
 	pingTimeout: 60000, // Va a realizar la conexion por 60 segundos si no se realiza nada
 	cors: {
-		origin: "http://localhost:3000",
+		origin: process.env.URL,
 	}
 });
 
