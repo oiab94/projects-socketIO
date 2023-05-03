@@ -9,6 +9,8 @@ import { UpdateChatGroupModal } from "./UpdateGroupChatModal";
 import ScrollableChat from "./ScollableChat";
 import axios from "axios";
 import { io } from "socket.io-client";
+import Lottie from "lottie-react";
+import animationData from "../../static/animations/lottie-hands-typing-on-keyboard.json";
 
 /*eslint-disable no-unused-vars */
 const ENDPOINT = process.env.REACT_APP_API_URL;
@@ -20,6 +22,8 @@ export const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 	const [loading, setLoading] = useState(false);
 	const [newMessage, setNewMessage] = useState("");
 	const [socketConnected, setSocketConnected] = useState();
+	const [typing, setTyping] = useState(false);
+	const [isTyping, setIsTyping] = useState(false);
 	
 	const fetchMessages = async () => {
 		if(!selectedChat) return;
@@ -55,7 +59,9 @@ export const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 	useEffect(() => {
 		socket = io(ENDPOINT);
 		socket.emit("setup", user);
-		socket.on("connection", () => setSocketConnected(true));
+		socket.on("connected", () => setSocketConnected(true));
+		socket.on("typing", () => setIsTyping(true));
+		socket.on("stop typing", () => setIsTyping(false));
 	}, []);
 	
 	useEffect(() => {
@@ -71,6 +77,7 @@ export const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
 	const sendMessage = async (event) => {
 		if(event.key === "Enter" && newMessage){
+			socket.emit("stop typing", selectedChat._id);
 			event.preventDefault();
 			try {
 				const config = {
@@ -96,6 +103,25 @@ export const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 		setNewMessage(target.value);
 
 		// Typing indicator logic
+		if(!socketConnected) return;
+
+		if(!typing){
+			setTyping(true);
+			socket.emit("typing", selectedChat._id);
+		}
+
+		let lastTypingTime = new Date().getTime();
+		let timerLength = 3000;
+
+		setTimeout(() => {
+			var timeNow = new Date().getTime();
+			var timeDiff = timeNow - lastTypingTime;
+
+			if(timeDiff >= timerLength && typing){
+				socket.emit("stop typing", selectedChat._id);
+				setTyping(false);
+			}
+		}, timerLength);
 	};
 	
 
@@ -175,6 +201,21 @@ export const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 							onKeyDown={sendMessage}
 							style={{ backgroundColor: "var(--bs-border-color)" }}
 						>
+							{
+								isTyping 
+									? <Lottie 
+										style={{
+											display:"flex", 
+											height:"50px", 
+											width:"50px", 
+											alignItems:"self-start",
+											marginLeft:0,
+											marginBottom:0
+										}}
+										animationData={animationData}	
+									/> 
+									: <></>
+							}
 							<Form.Control
 								placeholder="Enter a message.."
 								type="text"
