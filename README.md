@@ -1,4 +1,4 @@
-# Web Socket.io
+# Chat App
 
 Está es una **aplicación de chat** que permite realizar una comunicacion en tiempo real utilizando socket.io
 
